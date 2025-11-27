@@ -6,5 +6,3 @@ __pycache__/
 env/
 venv/
 .DS_Store
-/docs
-/chroma_db
