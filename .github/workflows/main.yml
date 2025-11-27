@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 env:
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -33,7 +33,7 @@ jobs:
       # Note: Since docs/ is managed by DVC, you would typically run 'dvc pull' here to fetch the raw data.
       # You would also need to configure DVC remote credentials.
       # Example: dvc pull
-      
+
       - name: Run Ingestion Script
         run: python ingest.py
 
@@ -43,6 +43,10 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase Image Name
+        run: |
+          echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
