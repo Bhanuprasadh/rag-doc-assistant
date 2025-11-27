@@ -7,3 +7,5 @@ pypdf
 python-multipart
 sentence-transformers
 dvc
+streamlit
+requests

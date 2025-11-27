@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+import os
 from pydantic import BaseModel
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -22,8 +23,9 @@ def get_rag_response(query: str) -> str:
         retriever = vector_store.as_retriever(search_kwargs={"k": 3})
         
         # 3. Setup LLM (Ollama)
+        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
         llm = Ollama(
-            base_url="http://localhost:11434",
+            base_url=base_url,
             model="llama3"
         )
         

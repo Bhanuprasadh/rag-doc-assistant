@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    # Using host network mode to allow access to local Ollama instance easily on Linux/Mac
+    # Alternatively, for Mac/Windows Docker Desktop, we could use host.docker.internal
+    # But network_mode: host is often simplest for local LLM access if on Linux.
+    # Since user is on Mac, host.docker.internal is safer for cross-platform, 
+    # but user explicitly mentioned network_mode: 'host' or host.docker.internal.
+    # Let's use host.docker.internal for the Ollama URL env var and bridge network, 
+    # OR extra_hosts.
+    # However, the user prompt said "set network_mode: 'host' OR use host.docker.internal".
+    # Using host networking on Mac has limitations (ports aren't bound to localhost).
+    # Better approach for Mac: Use extra_hosts to map host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8501:8501"
+    environment:
+      # Frontend needs to talk to backend. 
+      # If we use bridge network, backend is available at http://backend:8000
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
