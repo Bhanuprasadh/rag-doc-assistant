@@ -1,5 +1,5 @@
 # Use the official Python 3.11 image
-FROM python:3.11-slim
+FROM python:3.11
 
 # Set the working directory to /app
 WORKDIR /app
@@ -7,11 +7,6 @@ WORKDIR /app
 # Copy the requirements file into the container at /app
 COPY requirements.txt .
 
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip && \
