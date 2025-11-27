@@ -26,7 +26,7 @@ def get_rag_response(query: str) -> str:
         base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
         llm = Ollama(
             base_url=base_url,
-            model="llama3"
+            model="llama3:8b"
         )
         
         # 4. Create RAG Chain
