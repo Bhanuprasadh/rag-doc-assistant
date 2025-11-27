@@ -42,7 +42,7 @@ def get_rag_response(query: str) -> str:
     except Exception as e:
         return f"Error processing request: {str(e)}"
 
-@app.post("/query")
+@app.post("/api/query")
 async def query_endpoint(request: QueryRequest):
     response = get_rag_response(request.query)
     return {"response": response}
