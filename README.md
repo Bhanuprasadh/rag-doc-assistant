@@ -98,19 +98,6 @@ If you prefer running it without Docker:
 
 ---
 
-## 🔄 Data Version Control (DVC)
-
-We use **DVC** to track the `docs/` folder and `chroma_db/` directory.
-
-*   To add new documents:
-    1.  Put files in `docs/`.
-    2.  Run ingestion: `python ingest.py`
-    3.  Track changes:
-        ```bash
-        dvc add docs chroma_db
-        git add docs.dvc chroma_db.dvc
-        git commit -m "Update documents"
-        ```
 
 ---
 
