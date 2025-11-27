@@ -8,9 +8,11 @@ WORKDIR /app
 COPY requirements.txt .
 
 
+# Install torch CPU version first to reduce image size and avoid build issues
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
 # Install any needed packages specified in requirements.txt
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
 COPY . .
